@@ -1,0 +1,119 @@
+﻿@using OnlineShopping.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*@Styles.Render("~/Content/css")*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/MyMainLayOut.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    
+           
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-xs-6">
+                <div class="logo">
+                    <h1><a href="#">Bold Touch</a></h1>
+                    <p>My Shop</p>
+                    @if (User.Identity.IsAuthenticated)
+            {
+                    <p>Dear - @User.Identity.Name</p>
+
+            }
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xs-6">
+                <div class="account">
+                    <ul>
+                        <li>
+                            <div class="hidden-xs">
+                                <h4>Call</h4>
+                                <p>+923101478773</p>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="dropdown">
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Cart(3) <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            @if (Session["cart"] != null)
+                                            {
+                                                foreach (Item item in (List<Item>)Session["cart"])
+                                                {
+                                                    @*<li><a href="#">@item.Product.ProductName (@item.Product.Quantity)</a>@Html.ActionLink("Delete", "RemoveFromCart", "Product")</li>*@
+                                                    <li><a href="@Url.Action("RemoveFromCart","Product", new {ProductId = item.Product.ProductId})">@item.Product.ProductName (@item.Product.Quantity) <i class="fa fa-times"></i></a></li>
+
+                                                }
+                                            }
+                                            <li class="divider"></li>
+                                            <li><a href="#">Add Stuff Bro!</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="visible-xs">
+                                <style>
+                                    .Logout a{
+                                        background-color: black; border-radius: 10px; color:red; padding: 4px;
+                                    }
+                                </style>
+
+                                <p>+923101478773</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="nav-menus">
+
+                    <ul class="nav nav-pills">
+                        <li class="active"><a style="border-radius:initial;" href="#">Home</a></li>
+                        <li><a style="border-radius:initial;" href="#">Location</a></li>
+                        <li>@Html.ActionLink("AboutCompany", "AboutCompany", "Product")</li>
+                        <li style="float:right;">@Html.ActionLink("Login", "Login", "Registration")</li>
+                        <li style="float:right;">@Html.ActionLink("Signup", "Signup", "Registration")</li>
+                        <li  style="float:right;">@Html.ActionLink("Logout", "Logout", "Registration")</li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="row">
+                <div class="col-md-12 copyright">
+
+                    <div class="col-md-6 col-sm-6 copyright-left">
+                        <p>&copy; @DateTime.Now.Year - BoldTouch. All right reserved.</p>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 copyright-right">
+
+                        <ul class="list-unstyled list-social">
+                            <li><a href="#" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
